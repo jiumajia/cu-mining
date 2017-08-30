@@ -69,7 +69,7 @@ def run_singlemodel(trian_x,trian_y,test_x,test_y):
         trian = trian_x[:,index]
         test = test_x[:,index]
         #step3 ：minning
-        model(['SVM'],trian,trian_y,test,test_y)
+        model(['Linear'],trian,trian_y,test,test_y)
 
 
 def run_mergemodel(trian_x,trian_y,test_x,test_y):
@@ -80,7 +80,7 @@ def run_mergemodel(trian_x,trian_y,test_x,test_y):
 
 
 if __name__ == "__main__":
-    tstart = '2011git-1-1'
+    tstart = '2011-1-1'
     tend = '2017-6-20'
     prediction_day = '2017-1-22'
 
