@@ -94,13 +94,6 @@ if __name__ == "__main__":
     target_data = np.array(target_data['target'])
 
     trian_x,test_x,trian_y,test_y= cross_validation.train_test_split(train_data,target_data, test_size=0.2, random_state=42)
-    #
-    # length = len(target_data)
-    # trian_y = np.array(target_data['target'][:int(length * 9 / 10 )])
-    # test_y = np.array(target_data['target'][int(length * 9 / 10 ):])
-    #
-    # trian_x = train_data[:int(length * 9 / 10 )]
-    # test_x = train_data[int(length * 9 / 10 ):]
 
 
     # step2-1：预处理数据: test_data missing
