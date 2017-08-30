@@ -80,7 +80,7 @@ def run_mergemodel(trian_x,trian_y,test_x,test_y):
 
 
 if __name__ == "__main__":
-    tstart = '201-1-1'
+    tstart = '2011git-1-1'
     tend = '2017-6-20'
     prediction_day = '2017-1-22'
 
@@ -118,8 +118,7 @@ if __name__ == "__main__":
     print '训练集样本数:',len(train_x)
     print '测试集样本数:',len(test_x)
 
-    #run_singlemodel(trian_x,trian_y,test_x,test_y)
-    model(['SVM'],trian_x,trian_y,test_x,test_y)
+    run_singlemodel(trian_x,trian_y,test_x,test_y)
 
 
     # index = [0,1,4,5,6,7,8,9,10,11,12,18,19,20,22,23,24,25,30,31,32,33,34,35]
