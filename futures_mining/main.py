@@ -1,4 +1,4 @@
-#!/usr/bin/env p ython
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
 @date: 2017-07-25
@@ -9,9 +9,11 @@
 
 import numpy as np
 from correction import get_statics
+from info.table_info import features_list
 from sklearn import preprocessing
 from data_select import *
-from models import feature_RFE,SVM, RandomForest, DecisionTree,Linear,NaiveBayes,Bagging
+from predict_models import SVM, RandomForest, DecisionTree,Linear,NaiveBayes,Bagging
+from features_models import feature_RFE
 from sklearn import cross_validation
 
 def Standardized_data(train):
@@ -65,7 +67,7 @@ def run_singlemodel(trian_x,trian_y,test_x,test_y):
     rank = feature_RFE(trian_x,trian_y)
     for i in range(0,len(rank)):
         index = [x for x in range(0,len(rank[i])) if rank[i][x]==1]
-        print index
+        print [features_list[x] for x in index]
         trian = trian_x[:,index]
         test = test_x[:,index]
         #step3 ：minning
@@ -80,42 +82,26 @@ def run_mergemodel(trian_x,trian_y,test_x,test_y):
 
 
 if __name__ == "__main__":
-    tstart = '2011-1-1'
+    tstart = '2013-01-01'
     tend = '2017-6-20'
-    prediction_day = '2017-1-22'
 
     # step1：读取 features_data,target_data,test_data
-    features_data,target_data = get_learningdata()
+    data = get_learningdata(tstart,tend)
+    data = data[data.QA == 2]
+    t1 = data.day > 5
+    t2 = data.day < 17
+    data = data[t1 & t2]
+    train_data = np.array(data[features_list])
+    print features_list
+    target_data = np.array(data['target'])
 
-    col_name = features_data.columns
-    print col_name
+    preprocessing.scale(train_data)
 
-    train_data  = np.array(features_data)
-    target_data = np.array(target_data['target'])
-
-    trian_x,test_x,trian_y,test_y= cross_validation.train_test_split(train_data,target_data, test_size=0.2, random_state=42)
-    #
-    # length = len(target_data)
-    # trian_y = np.array(target_data['target'][:int(length * 9 / 10 )])
-    # test_y = np.array(target_data['target'][int(length * 9 / 10 ):])
-    #
-    # trian_x = train_data[:int(length * 9 / 10 )]
-    # test_x = train_data[int(length * 9 / 10 ):]
+    trian_x,test_x,trian_y,test_y= cross_validation.train_test_split(train_data,target_data, test_size=0.3, random_state=42)
 
 
-    # step2-1：预处理数据: test_data missing
-#     imp = preprocessing.Imputer(missing_values='NaN', strategy='mean', axis=0)
-#     imp.fit(train_data)
-# #   test =imp.transform(test_data)
 
-    # step2-1：预处理-标准化数据: Standardized data
-    train_x = Standardized_data(trian_x)
-    test_x = Standardized_data(test_x)
-    # step2-2：预处理-正则化数据: Normalization data
-    # train_data,test= Normalization_data(features_data,test_data)
-
-
-    print '训练集样本数:',len(train_x)
+    print '训练集样本数:',len(trian_x)
     print '测试集样本数:',len(test_x)
 
     run_singlemodel(trian_x,trian_y,test_x,test_y)

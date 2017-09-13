@@ -13,7 +13,6 @@ from prettytable import PrettyTable
 
 
 
-
 def get_statics(df,y):
     """
     打印 相关系数信息
@@ -32,7 +31,7 @@ def get_statics(df,y):
 
 
 if __name__ == "__main__":
-    data = pd.read_csv("./datasets/cu.csv")
+    data = pd.read_csv("../datasets/cu.csv")
     data = data.drop('date',axis=1)
     data = data.dropna()
     a = pd.DataFrame()

@@ -1,4 +1,6 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
 import pandas as pd
 
 def Fdating(df, format_dic):
@@ -25,6 +27,7 @@ def Fdating(df, format_dic):
         return e
     #
     try:
+
         for name, values in format_dic.items():
             for value in values:
                 temp = []   # set a temp list to store dating field
@@ -52,7 +55,7 @@ if __name__ == "__main__":
     df = pd.DataFrame(aa)
     print Fdating(df, {'two': 2, 'one': 3})
 #
-#     result:
+#   result:
 #    target  one  two  two_2  one_3
 # 0       5    1   11      0      0
 # 1       6    2   12     23      0

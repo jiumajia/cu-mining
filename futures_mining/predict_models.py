@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
 @date: 2016-09-13
@@ -12,24 +13,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.ensemble import BaggingClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.naive_bayes import GaussianNB
-from sklearn.feature_selection import RFE
 from sklearn.metrics import accuracy_score
-
-
-def feature_RFE(trian_x, trian_y):
-    """
-    返回rank:用标签1标识选中的特征
-    """
-    cfr = LogisticRegression()
-    cfr.fit(trian_x, trian_y)
-    rank = []
-
-    for n in range(2, trian_x.shape[1], 1):
-        selector = RFE(cfr, n_features_to_select=n, step=1)
-        selector.fit(trian_x, trian_y)
-        rank.append(selector.ranking_)
-
-    return rank
 
 
 def SVM(trian_x, trian_y, test_x, test_y):
@@ -160,9 +144,9 @@ def Bagging(trian_x, trian_y, test_x, test_y):
         iter_num += 1
         cfr = BaggingClassifier(LogisticRegression(), n_estimators=n,
                                 max_samples=0.5, max_features=0.5)
-        cfr.fit(train1, target1)
-        p_out = cfr.predict(train2)
-        accuracy_t = validation(p_out, target2)
+        cfr.fit(trian_x, trian_y)
+        p_out = cfr.predict(test_x)
+        accuracy_t = accuracy_score(p_out, test_y)
         if (accuracy < accuracy_t):
             accuracy = accuracy_t
             params = cfr.get_params()
