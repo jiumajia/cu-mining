@@ -20,6 +20,7 @@ Icon
 
 # User-specific stuff:
 .idea/**/workspace.xml
+.idea/workspace.xml
 .idea/**/tasks.xml
 .idea/dictionaries
 
@@ -175,5 +176,5 @@ ENV/
 /site
 
 # End of https://www.gitignore.io/api/macos,python,pycharm
-
 .idea/
+#GI

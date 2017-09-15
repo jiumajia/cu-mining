@@ -85,8 +85,8 @@ class Wind_Data(object):
         self.dataset.to_csv("../datasets/cu.csv")
         self.dataset  = self.dataset.drop_duplicates().dropna(how='any')
         target_data["target"] = self.dataset[col_name].diff(-n)
-        target_data.loc[target_data["target"]>=0,"target"] = 0
-        target_data.loc[target_data["target"]<0,"target"] = -1
+        target_data.loc[target_data["target"]>=0,"target"] = 1
+        target_data.loc[target_data["target"]<0,"target"] = 0
         # target_data.dropna(inplace=True)
         self.dataset["target"] = target_data["target"]
 

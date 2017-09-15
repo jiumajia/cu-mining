@@ -12,7 +12,7 @@ from correction import get_statics
 from info.table_info import features_list
 from sklearn import preprocessing
 from data_select import *
-from predict_models import SVM, RandomForest, DecisionTree,Linear,NaiveBayes,Bagging
+from predict_models import SVM, RandomForest, DecisionTree,Linear,NaiveBayes,Bagging,xgboost
 from features_models import feature_RFE
 from sklearn import cross_validation
 
@@ -74,6 +74,7 @@ def run_singlemodel(trian_x,trian_y,test_x,test_y):
         model(['Linear'],trian,trian_y,test,test_y)
 
 
+
 def run_mergemodel(trian_x,trian_y,test_x,test_y):
     pass
 
@@ -87,25 +88,25 @@ if __name__ == "__main__":
 
     # step1：读取 features_data,target_data,test_data
     data = get_learningdata(tstart,tend)
-    data = data[data.QA == 2]
-    t1 = data.day > 5
-    t2 = data.day < 17
-    data = data[t1 & t2]
+    data = data[data.QA == 1]
+    # t1 = data.day > 5
+    # t2 = data.day < 17
+    # data = data[t1 & t2]
     train_data = np.array(data[features_list])
     print features_list
     target_data = np.array(data['target'])
 
     preprocessing.scale(train_data)
 
-    trian_x,test_x,trian_y,test_y= cross_validation.train_test_split(train_data,target_data, test_size=0.3, random_state=42)
+    train_x,test_x,train_y,test_y = cross_validation.train_test_split(train_data,target_data, test_size=0.2,random_state=0)
 
 
 
-    print '训练集样本数:',len(trian_x)
+    print '训练集样本数:',len(train_x)
     print '测试集样本数:',len(test_x)
 
-    run_singlemodel(trian_x,trian_y,test_x,test_y)
-
+    run_singlemodel(train_x,train_y,test_x,test_y)
+    #xgboost(train_x,train_y,test_x,test_y)
 
     # index = [0,1,4,5,6,7,8,9,10,11,12,18,19,20,22,23,24,25,30,31,32,33,34,35]
     # trian = trian_x[:,index]
