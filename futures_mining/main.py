@@ -102,6 +102,7 @@ if __name__ == "__main__":
 
 
 
+
     print '训练集样本数:',len(train_x)
     print '测试集样本数:',len(test_x)
 
