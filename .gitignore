@@ -22,7 +22,10 @@ Icon
 .idea/**/workspace.xml
 .idea/workspace.xml
 .idea/**/tasks.xml
-.idea/dictionaries
+.idea/dictionarie
+.idea/*.xml
+workspace.xml
+
 
 # Sensitive or high-churn files:
 .idea/**/dataSources/
