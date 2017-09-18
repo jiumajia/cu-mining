@@ -7,8 +7,8 @@
 """
 
 
-from sklearn.linear_model import LogisticRegression
 from sklearn.feature_selection import RFE
+from sklearn.linear_model import LogisticRegression
 
 
 
@@ -26,3 +26,7 @@ def feature_RFE(trian_x, trian_y):
         rank.append(selector.ranking_)
 
     return rank
+
+if __name__ == "__main__":
+
+    pass

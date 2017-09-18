@@ -6,15 +6,15 @@
 @author: zhoucuilian
 """
 
-
 import numpy as np
-from correction import get_statics
-from info.table_info import features_list
-from sklearn import preprocessing
-from data_select import *
-from predict_models import SVM, RandomForest, DecisionTree,Linear,NaiveBayes,Bagging,xgboost
-from features_models import feature_RFE
 from sklearn import cross_validation
+from sklearn import preprocessing
+
+from features_pre.data_select import *
+from features_pre.features_models import feature_RFE
+from info.table_info import features_list
+from mining.predict_models import SVM, RandomForest, DecisionTree,Linear,NaiveBayes,Bagging
+
 
 def Standardized_data(train):
     """

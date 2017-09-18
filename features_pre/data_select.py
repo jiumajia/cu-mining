@@ -8,8 +8,6 @@
 
 import pandas as pd
 
-from Wind_Data import Wind_Data
-from info.table_info import table_name,table_col
 
 
 #
