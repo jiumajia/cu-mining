@@ -42,7 +42,7 @@ def run_model(ensemble, data):
 
     preprocessing.scale(train_data)
 
-    train_x, test_x, train_y, test_y = train_test_split(train_data,target_data, test_size=0.2,random_state=42)
+    train_x, test_x, train_y, test_y = train_test_split(train_data, target_data, test_size=0.2,random_state=42)
 
     print '训练集样本数:',len(train_x), '  测试集样本数:',len(test_x)
 

@@ -17,18 +17,16 @@ def get_statics(df,y):
     """
     打印 相关系数信息
     """
-    table = PrettyTable(["col_name", "pearsonr","spearmanr"])
+    table = PrettyTable(["col_name", "pearsonr", "spearmanr"])
 
     a = np.array(y).tolist()
     a = [float(i) for i in a ]
     for name in df:
         b = np.array(df[name]).tolist()
-        b = [float(i) for i in b ]
-        r_p = stats.pearsonr(a,b)
-        s_p = stats.spearmanr(df[name],y)
-        table.add_row([name,round(r_p[0],6),round(s_p[0],6)])
-
-
+        b = [float(i) for i in b]
+        r_p = stats.pearsonr(a, b)
+        s_p = stats.spearmanr(df[name], y)
+        table.add_row([name, round(r_p[0], 6), round(s_p[0], 6)])
 
 if __name__ == "__main__":
     data = pd.read_csv("../datafiles/cu.csv")
@@ -36,10 +34,10 @@ if __name__ == "__main__":
     data = data.dropna()
     a = pd.DataFrame()
     a["S0181392"] = data["S0181392"].diff(-1)
-    a.loc[a['S0181392']>=0,"S0181392"] = 0
-    a.loc[a['S0181392']<0,"S0181392"] = -1
-    get_statics(data[:-1],a['S0181392'].dropna())
-    get_statics(data[:-1],data["S0181392"].diff(-1).dropna())
+    a.loc[a['S0181392'] >= 0, "S0181392"] = 0
+    a.loc[a['S0181392'] < 0, "S0181392"] = -1
+    get_statics(data[:-1], a['S0181392'].dropna())
+    get_statics(data[:-1], data["S0181392"].diff(-1).dropna())
 
 
 

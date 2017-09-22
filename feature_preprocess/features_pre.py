@@ -145,7 +145,7 @@ def set_features(dataset):
 def get_pre_data(tstart, tend):
     data = pd.DataFrame()
     try:
-        data = get_data_from_mysql(tstart,tend)
+        data = get_data_from_mysql(tstart, tend)
 
     except Exception,e:
         print e.message
