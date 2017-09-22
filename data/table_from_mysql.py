@@ -9,7 +9,8 @@
 import pandas as pd
 
 import config
-from info.table_info import table_col_map
+
+from table_info import table_col_map
 from sqlalchemy import create_engine
 
 
@@ -25,7 +26,7 @@ class Cu_Data(object):
         self.table_col_map = table_col_map
         self.dataset = pd.DataFrame(columns=["date"])
 
-    def read_data(self,tstart = '2011-01-01',tend = '2017-07-30'):
+    def get_data(self,tstart = '2011-01-01',tend = '2017-07-30'):
         #从mysql数据库 读取数据
         for tn in self.table_col_map.keys():
             for cn in self.table_col_map[tn]:
@@ -36,19 +37,18 @@ class Cu_Data(object):
                 self.dataset = pd.merge(self.dataset,data_slice,how = 'outer')
 
         self.dataset = self.dataset.sort_values(by="date")
-        self.dataset["date"] = pd.to_datetime(self.dataset["date"])
-        self.dataset.to_csv("../datasets/cu.csv")
-
-
-
-    def get_dataset(self):
-
+        self.dataset.to_csv("/Users/zhoucuilian/PycharmProjects/cu_mining/datasets/cu.csv")
         return self.dataset
 
-if __name__ == "__main__":
+def get_data_from_mysql(tstart,tend):
     cu = Cu_Data(table_col_map)
-    cu.read_data()
-    cu.get_dataset()
+    return cu.get_data(tstart,tend)
+
+
+if __name__ == "__main__":
+    get_data_from_mysql(tstart = '2011-01-01',tend = '2017-07-30')
+
+
 
 
 
