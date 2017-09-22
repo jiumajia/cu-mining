@@ -142,7 +142,7 @@ def set_features(dataset):
 
 
 
-def get_pre_data(tstart,tend):
+def get_pre_data(tstart, tend):
     data = pd.DataFrame()
     try:
         data = get_data_from_mysql(tstart,tend)
@@ -155,14 +155,14 @@ def get_pre_data(tstart,tend):
             print e.message
             return data
 
-    col_fill = {'USE00020':'median','S0049507':'bfill','PE100058':'pad','MA000001':'pad'}
+    col_fill = {'USE00020': 'median', 'S0049507': 'bfill', 'PE100058': 'pad', 'MA000001': 'pad'}
 
-    data = fill_data(data,col_fill)
-    data = set_tagret(data,'S0181392',1)
-    data.to_csv("/Users/zhoucuilian/PycharmProjects/cu_mining/datasets/cu_fill.csv")
+    data = fill_data(data, col_fill)
+    data = set_tagret(data, 'S0181392', 1)
+    # data.to_csv("/Users/zhoucuilian/PycharmProjects/cu_mining/datafiles/cu_fill.csv")   already have in front function
     data = set_features(data)
-    b1 = data.date>=tstart
-    b2 = data.date<=tend
+    b1 = data.date >= tstart
+    b2 = data.date <= tend
     data = data[b1 & b2]
 
     return data
