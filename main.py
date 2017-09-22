@@ -14,30 +14,6 @@ from matplotlib import pyplot as plt
 from feature_engineering.features_model import *
 from data.table_info import features_list
 
-def Standardized_data(train):
-    """
-    标准化训练集、测试集
-    """
-    scaler = preprocessing.StandardScaler().fit(train)
-    train_data = scaler.transform(train)
-    #test_data = scaler.transform(test)
-
-    #return train_data,test_data
-    return train_data
-
-def Normalization_data(train,test):
-    """
-    正则化训练集、测试集
-    """
-    normalizer = preprocessing.Normalizer().fit(train)
-    train_data = normalizer.transform(train)
-   # test_data = normalizer.transform(test)
-
-    #return train_data,test_data
-    return train_data
-
-
-
 
 if __name__ == "__main__":
 
