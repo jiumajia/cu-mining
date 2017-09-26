@@ -11,7 +11,7 @@ import datetime
 import pandas as pd
 import talib
 from dummy_features import Fdating
-from data.table_from_mysql import get_data_from_mysql
+from data_handle.table_from_mysql import get_data_from_mysql
 
 
 
@@ -159,7 +159,7 @@ def get_pre_data(tstart, tend):
 
     data = fill_data(data, col_fill)
     data = set_tagret(data, 'S0181392', 1)
-    # data.to_csv("/Users/zhoucuilian/PycharmProjects/cu_mining/datafiles/cu_fill.csv")   already have in front function
+    # data_handle.to_csv("/Users/zhoucuilian/PycharmProjects/cu_mining/datafiles/cu_fill.csv")   already have in front function
     data = set_features(data)
     b1 = data.date >= tstart
     b2 = data.date <= tend

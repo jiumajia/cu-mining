@@ -8,7 +8,7 @@
 from mining import model_Bagging, model_DecisionTree, model_LR, model_NaiveBayes, model_RF, model_SVM, model_XGB
 from sklearn import preprocessing
 import numpy as np
-from data.table_info import features_list
+from data_handle.table_info import features_list
 from sklearn.cross_validation import *
 
 def Standardized_data(train):
