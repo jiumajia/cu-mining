@@ -11,7 +11,7 @@ import datetime
 import pandas as pd
 import talib
 from dummy_features import Fdating
-from data.table_from_mysql import get_data_from_mysql
+from data_handle.table_from_mysql import CuData
 
 
 
@@ -141,11 +141,11 @@ def set_features(dataset):
 
 
 
-def get_pre_data(tstart,tend):
+def get_pre_data(tstart, tend):
     data = pd.DataFrame()
     try:
-        data = get_data_from_mysql(tstart,tend)
-
+        cu = CuData(start_date='2012-01-01', end_date='2017-07-30')
+        data = cu.data
     except Exception,e:
         print e.message
         try:
@@ -154,14 +154,19 @@ def get_pre_data(tstart,tend):
             print e.message
             return data
 
+
     #col_fill = {'USE00020':'median','S0049507':'pad','PE100058':'pad','MA000001':'pad'}
     col_fill = {'USE00020':'median','S0049507':'pad','PE100058':'pad','PE100042':'bfill'}
 
     data = fill_data(data,col_fill)
-
-    data.to_csv("/Users/zhoucuilian/PycharmProjects/cu_mining/datasets/cu_fill.csv")
-    data = set_tagret(data,'S0181392',1)
-
+    #data.to_csv("/Users/zhoucuilian/PycharmProjects/cu_mining/datasets/cu_fill.csv")
+    data = fill_data(data, col_fill)
+    data = set_tagret(data, 'S0181392', 1)
+    # data_handle.to_csv("/Users/zhoucuilian/PycharmProjects/cu_mining/datafiles/cu_fill.csv")   already have in front function
+    data = set_features(data)
+    b1 = data.date >= tstart
+    b2 = data.date <= tend
+    data = data[b1 & b2]
     data = set_features(data)
     return data
 

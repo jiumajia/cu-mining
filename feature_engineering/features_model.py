@@ -7,7 +7,7 @@
 """
 
 from sklearn.feature_selection import RFE
-from data.table_info import features_list
+from data_handle.table_info import features_list
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 
