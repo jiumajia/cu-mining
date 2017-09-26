@@ -6,10 +6,7 @@
 @author: zhoucuilian
 """
 
-import pandas as pd
-import numpy as np
 from sklearn.feature_selection import RFE
-from feature_preprocess.features_pre import get_pre_data
 from data.table_info import features_list
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
@@ -20,8 +17,8 @@ def feature_RFE(trian_x, trian_y):
     """
     返回rank:用标签1标识选中的特征
     """
-    # cfr = LogisticRegression()
-    cfr = RandomForestClassifier()
+    cfr = LogisticRegression()
+    #cfr = RandomForestClassifier()
     cfr.fit(trian_x, trian_y)
     rank = []
 
@@ -42,7 +39,7 @@ def run_singlemodel(trian_x,trian_y,test_x,test_y):
         trian = trian_x[:,index]
         test = test_x[:,index]
         #step3 ：minning
-        ensemble = ['RandomForest']
+        ensemble = ['Linear']
         run_model(ensemble,trian,trian_y,test,test_y)
 
     return rank

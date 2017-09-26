@@ -110,8 +110,8 @@ def set_features(dataset):
     p_data['d611'] = dataset['S5806282'] - dataset['S5806281']
     # D612: 1 # 铜升贴水:最大值:上海金属 - 1#铜升贴水:最小值:上海金属
     p_data['d612'] = dataset['S0203260'] - dataset['S0203259']
-    p_data['d711'] = dataset['PE100058'] / dataset['MA000001']
-    p_data['d712'] = dataset['S0049493'] / dataset ['MA000001']
+#    p_data['d711'] = dataset['PE100058'] / dataset['MA000001']
+#    p_data['d712'] = dataset['S0049493'] / dataset ['MA000001']
     #p_data['date'] = self.dataset['date']
     p_data['S0049493'] = dataset['S0049493']
     p_data['price_open'] = dataset['price_open']
@@ -130,7 +130,6 @@ def set_features(dataset):
     p_data['QA'] = dataset['date'].map(get_quarter)
     p_data['day']  = dataset['date'].map(get_day)
     #index
-    print dataset
     dataset = pd.merge(dataset,p_data,how = 'outer')
     dataset  = pd.concat([dataset],ignore_index=True)
 
@@ -155,16 +154,15 @@ def get_pre_data(tstart,tend):
             print e.message
             return data
 
-    col_fill = {'USE00020':'median','S0049507':'bfill','PE100058':'pad','MA000001':'pad'}
+    #col_fill = {'USE00020':'median','S0049507':'pad','PE100058':'pad','MA000001':'pad'}
+    col_fill = {'USE00020':'median','S0049507':'pad','PE100058':'pad','PE100042':'bfill'}
 
     data = fill_data(data,col_fill)
-    data = set_tagret(data,'S0181392',1)
-    data.to_csv("/Users/zhoucuilian/PycharmProjects/cu_mining/datasets/cu_fill.csv")
-    data = set_features(data)
-    b1 = data.date>=tstart
-    b2 = data.date<=tend
-    data = data[b1 & b2]
 
+    data.to_csv("/Users/zhoucuilian/PycharmProjects/cu_mining/datasets/cu_fill.csv")
+    data = set_tagret(data,'S0181392',1)
+
+    data = set_features(data)
     return data
 
 

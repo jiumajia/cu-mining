@@ -26,7 +26,7 @@ class Cu_Data(object):
         self.table_col_map = table_col_map
         self.dataset = pd.DataFrame(columns=["date"])
 
-    def get_data(self,tstart = '2011-01-01',tend = '2017-07-30'):
+    def get_data(self,tstart = '2011-01-01',tend = '2017-09-30'):
         #从mysql数据库 读取数据
         for tn in self.table_col_map.keys():
             for cn in self.table_col_map[tn]:
@@ -37,7 +37,7 @@ class Cu_Data(object):
                 self.dataset = pd.merge(self.dataset,data_slice,how = 'outer')
 
         self.dataset = self.dataset.sort_values(by="date")
-        self.dataset.to_csv("/Users/zhoucuilian/PycharmProjects/cu_mining/datasets/cu.csv")
+        self.dataset.to_csv("/Users/zhoucuilian/PycharmProjects/cu_mining/datasets/mysql_data.csv")
         return self.dataset
 
 def get_data_from_mysql(tstart,tend):
