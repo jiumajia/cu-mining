@@ -11,9 +11,6 @@ import datetime
 import pandas as pd
 import talib
 from dummy_features import Fdating
-from data_handle.table_from_mysql import get_data_from_mysql
-
-
 
 def get_quarter(date):
     """
@@ -142,18 +139,18 @@ def set_features(dataset):
 
 
 
-def get_pre_data(tstart, tend):
-    data = pd.DataFrame()
-    try:
-        data = get_data_from_mysql(tstart, tend)
-
-    except Exception,e:
-        print e.message
-        try:
-            pass
-        except Exception,e:
-            print e.message
-            return data
+def get_pre_data(data):
+    # data = pd.DataFrame()
+    # try:
+    #     data = get_data_from_mysql(tstart, tend)
+    #
+    # except Exception,e:
+    #     print e.message
+    #     try:
+    #         pass
+    #     except Exception,e:
+    #         print e.message
+    #         return data
 
     col_fill = {'USE00020': 'median', 'S0049507': 'bfill', 'PE100058': 'pad', 'MA000001': 'pad'}
 
@@ -161,9 +158,9 @@ def get_pre_data(tstart, tend):
     data = set_tagret(data, 'S0181392', 1)
     # data_handle.to_csv("/Users/zhoucuilian/PycharmProjects/cu_mining/datafiles/cu_fill.csv")   already have in front function
     data = set_features(data)
-    b1 = data.date >= tstart
-    b2 = data.date <= tend
-    data = data[b1 & b2]
+    # b1 = data.date >= tstart
+    # b2 = data.date <= tend
+    # data = data[b1 & b2]
 
     return data
 

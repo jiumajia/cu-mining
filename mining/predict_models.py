@@ -10,6 +10,7 @@ from sklearn import preprocessing
 import numpy as np
 from data_handle.table_info import features_list
 from sklearn.cross_validation import *
+from feature_preprocess.features_pre import get_pre_data
 
 def Standardized_data(train):
     """
@@ -37,8 +38,10 @@ def Normalization_data(train,test):
 def run_model(ensemble, data):
     # ensemble = ['SVM','RandomForest','Linear','DecisionTree','NaiveBayes','Bagging']
 
-    train_data = np.array(data[features_list])
-    target_data = np.array(data['target'])
+    preprocess_data = get_pre_data(data)
+
+    train_data = np.array(preprocess_data[features_list])
+    target_data = np.array(preprocess_data['target'])
 
     preprocessing.scale(train_data)
 

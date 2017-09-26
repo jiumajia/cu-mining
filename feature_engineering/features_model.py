@@ -6,12 +6,8 @@
 @author: zhoucuilian
 """
 
-import pandas as pd
-import numpy as np
 from sklearn.feature_selection import RFE
-from feature_preprocess.features_pre import get_pre_data
 from data_handle.table_info import features_list
-from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 
 from mining.predict_models import run_model
