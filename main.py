@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from feature_engineering.features_model import *
+from data_handle.table_from_mysql import CuData
 
 if __name__ == "__main__":
 

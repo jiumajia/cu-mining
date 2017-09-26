@@ -21,15 +21,28 @@ ALPHA_CONNECTION = create_engine('mysql+pymysql://exingcai:uscj!@#@172.16.88.140
 
 
 class CuData(object):
-    def __init__(self, table_col_map):
+    _file_path = "../datafiles/cu.csv"
+
+    def __init__(self):
         self.table_col_map = table_col_map
         self.dataset = pd.DataFrame(columns=["date"])
 
-    def get_data(self, start_date='2011-01-01', end_date='2017-07-30'):
-        read_data = self._get_data_from_mysql(start_date, end_date)
+    def __init__(self, start_date='2011-01-01', end_date='2017-07-30', source="DB"):
+        self.table_col_map = table_col_map
+        self.dataset = pd.DataFrame(columns=["date"])
+        self.get_data(start_date, end_date, source)
+
+    def get_data(self, start_date='2011-01-01', end_date='2017-07-30', source="DB"):
+        if source == "DB":
+            read_data = self._get_data_from_mysql(start_date, end_date)
+        elif source == "FILE":
+            read_data = pd.read_csv(self._file_path)
+        else:
+            raise ValueError("You must provide source : DB or FILE")
+
         return read_data
 
-    def _data_to_csv(self, path="../datafiles/cu.csv"):
+    def _data_to_csv(self, path=_file_path):
         try:
             self.dataset.to_csv(path)
         except Exception, e:
@@ -58,8 +71,7 @@ class CuData(object):
 
 
 if __name__ == "__main__":
-    cu = CuData(table_col_map)
-    cu.get_data(start_date='2011-01-01', end_date='2017-07-30')
+    cu = CuData(start_date='2012-01-01', end_date='2017-07-30')
     print cu.data
 
 
