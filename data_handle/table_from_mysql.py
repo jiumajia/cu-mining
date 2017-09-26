@@ -1,10 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""
-@date: 2017-07-25
-
-@author: zhoucuilian
-"""
 
 import pandas as pd
 
@@ -27,10 +22,10 @@ class CuData(object):
         self.table_col_map = table_col_map
         self.dataset = pd.DataFrame(columns=["date"])
 
-    def __init__(self, start_date='2011-01-01', end_date='2017-07-30', source="DB"):
+    def __init__(self, **kwargs):
         self.table_col_map = table_col_map
         self.dataset = pd.DataFrame(columns=["date"])
-        self.get_data(start_date, end_date, source)
+        self.get_data(**kwargs)
 
     def get_data(self, start_date='2011-01-01', end_date='2017-07-30', source="DB"):
         if source == "DB":
