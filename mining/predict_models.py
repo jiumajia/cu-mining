@@ -7,15 +7,16 @@
 """
 
 import time
+
 from sklearn import svm
-from sklearn.linear_model import LogisticRegression
-from sklearn.ensemble import RandomForestClassifier
 from sklearn.ensemble import BaggingClassifier
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.naive_bayes import GaussianNB
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
+from sklearn.naive_bayes import GaussianNB
+from sklearn.tree import DecisionTreeClassifier
 import xgboost as xgb
-from xgboost.sklearn import XGBClassifier
+
 
 def SVM(tran_x, train_y, test_x, test_y):
     gamma_2d_range = [x * 0.01 for x in range(2, 30)]
@@ -160,6 +161,7 @@ def Bagging(tran_x, train_y, test_x, test_y):
 
 def xgboost(tran_x, train_y, test_x, test_y):
     xgtrain = xgb.DMatrix(tran_x, label=train_y)
+
     xgtest = xgb.DMatrix(test_x,label=test_y)
     watchlist = [(xgtrain, 'train'),(xgtest, 'eval')]
     num_round = 1000
