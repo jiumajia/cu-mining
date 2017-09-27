@@ -7,7 +7,6 @@
 """
 
 from sklearn.feature_selection import RFE
-from data_handle.table_info import features_list
 from sklearn.ensemble import RandomForestClassifier
 
 from mining.predict_models import run_model

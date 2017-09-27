@@ -9,7 +9,7 @@ from mining import model_Bagging, model_DecisionTree, model_LR, model_NaiveBayes
     model_SVM, model_XGB, model_GBT
 import numpy as np
 
-from sklearn.cross_validation import *
+from sklearn.model_selection import train_test_split
 from feature_preprocess.features_pre import get_pre_data
 
 def run_model(ensemble, data):
