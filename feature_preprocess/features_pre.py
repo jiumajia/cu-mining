@@ -7,10 +7,12 @@
 """
 
 import datetime
-
+from data_handle.table_info import features_list
 import pandas as pd
 import talib
 from dummy_features import Fdating
+import numpy as np
+from sklearn import preprocessing
 
 def get_quarter(date):
     """
@@ -33,7 +35,16 @@ def get_day(date):
     return query_day
 
 
+def Standardized_data(train):
+    """
+    标准化训练集、测试集
+    """
+    scaler = preprocessing.StandardScaler().fit(train)
+    train_data = scaler.transform(train)
+    #test_data = scaler.transform(test)
 
+    #return train_data,test_data
+    return train_data
 
 def fill_data(dataset,col_fill):
     """
@@ -42,36 +53,31 @@ def fill_data(dataset,col_fill):
     method:fill method:median,bfill
     """
     for col_name in col_fill.keys():
-        method =  col_fill[col_name]
+        method = col_fill[col_name]
         if method == 'median':
-            dataset[col_name]= dataset[col_name].fillna(dataset[col_name].median()) #汇率用均值填充
+            dataset[col_name] = dataset[col_name].fillna(dataset[col_name].median())  # 汇率用均值填充
         elif method == 'mean':
-            dataset[col_name]= dataset[col_name].fillna(dataset[col_name].mean()) #汇率用中位数填充
+            dataset[col_name] = dataset[col_name].fillna(dataset[col_name].mean())  # 汇率用中位数填充
         elif method == 'bfill':
-            dataset[col_name] = dataset[col_name].fillna(method='bfill')  #库存用周五的数据填充
+            dataset[col_name] = dataset[col_name].fillna(method='bfill')  # 库存用周五的数据填充
         elif method == 'pad':
-            dataset[col_name] = dataset[col_name].fillna(method='pad')  #库存用周五的数据填充
+            dataset[col_name] = dataset[col_name].fillna(method='pad')  # 库存用周五的数据填充
 
     return dataset
 
-
-
-
-def set_tagret(dataset,col_name,n):
+def set_tagret(dataset, col_name, n):
     """
     col_name:列名
     n:天数
     """
     target_data = pd.DataFrame()
-    dataset  = dataset.drop_duplicates().dropna(how='any')
-    target_data["target"] = dataset[col_name].diff(-n)
-    target_data.loc[target_data["target"]>=0,"target"] = 1
-    target_data.loc[target_data["target"]<0,"target"] = 0
+    dataset = dataset.drop_duplicates().dropna(how='any')
+    # target_data["target"] = dataset[col_name].diff(-n)
+    # target_data.loc[target_data["target"] >= 0, "target"] = 1
+    # target_data.loc[target_data["target"] < 0, "target"] = 0
 
-    dataset["target"] = target_data["target"]
+    dataset["target"] = np.where(dataset['S0181392'].diff(-1) >= 0, 0, 1)
     return dataset
-
-
 
 def set_features(dataset):
 
@@ -125,50 +131,29 @@ def set_features(dataset):
     #p_data['MA20'] = talib.MA(p_data['price_close'].values, timeperiod=20)
     #p_data['EMA20'] = talib.EMA(p_data['price_close'].values, timeperiod=20)
     p_data['QA'] = dataset['date'].map(get_quarter)
-    p_data['day']  = dataset['date'].map(get_day)
+    p_data['day'] = dataset['date'].map(get_day)
     #index
-    print dataset
-    dataset = pd.merge(dataset,p_data,how = 'outer')
-    dataset  = pd.concat([dataset],ignore_index=True)
+    # print dataset
+    dataset = pd.merge(dataset, p_data, how='outer')
+    dataset = pd.concat([dataset], ignore_index=True)
 
 
-    dic = {'S0049493':[2,3,4],'S0029752':[2,3,4]}
+    dic = {'S0049493': [2, 3, 4], 'S0029752': [2, 3, 4]}
     dataset = Fdating(dataset, dic)
-    dataset  = dataset.drop_duplicates().dropna(how='any')
+    dataset = dataset.drop_duplicates().dropna(how='any')
     return dataset
 
-
-
 def get_pre_data(data):
-    # data = pd.DataFrame()
-    # try:
-    #     data = get_data_from_mysql(tstart, tend)
-    #
-    # except Exception,e:
-    #     print e.message
-    #     try:
-    #         pass
-    #     except Exception,e:
-    #         print e.message
-    #         return data
 
     col_fill = {'USE00020': 'median', 'S0049507': 'bfill', 'PE100058': 'pad', 'MA000001': 'pad'}
-
     data = fill_data(data, col_fill)
+
     data = set_tagret(data, 'S0181392', 1)
-    # data_handle.to_csv("/Users/zhoucuilian/PycharmProjects/cu_mining/datafiles/cu_fill.csv")   already have in front function
+
     data = set_features(data)
-    # b1 = data.date >= tstart
-    # b2 = data.date <= tend
-    # data = data[b1 & b2]
 
-    return data
+    train_data = np.array(data[features_list])
 
+    target_data = np.array(data['target'])
 
-
-
-
-
-
-
-
+    return train_data, target_data

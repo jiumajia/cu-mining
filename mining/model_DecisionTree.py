@@ -4,7 +4,7 @@ import time
 from sklearn.metrics import accuracy_score
 from sklearn.tree import DecisionTreeClassifier
 
-def DecisionTree(tran_x, train_y, test_x, test_y):
+def DecisionTree(train_x, train_y, test_x, test_y):
     accuracy = 0
     criterion = ['gini', 'entropy']
     iter_num = 0
@@ -13,7 +13,7 @@ def DecisionTree(tran_x, train_y, test_x, test_y):
         iter_num += 1
         start = time.clock()
         cfr = DecisionTreeClassifier(criterion=c)
-        cfr.fit(tran_x, train_y)
+        cfr.fit(train_x, train_y)
         p_out = cfr.predict(test_x)
         accuracy_t = accuracy_score(test_y, p_out)
         if (accuracy < accuracy_t):
