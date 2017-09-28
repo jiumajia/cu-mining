@@ -8,7 +8,7 @@
 
 from sklearn.feature_selection import RFE
 from sklearn.ensemble import RandomForestClassifier
-
+from feature_preprocess.features_gear import features_list
 from mining.predict_models import run_model
 
 def feature_RFE(trian_x, trian_y):
@@ -28,17 +28,17 @@ def feature_RFE(trian_x, trian_y):
     return rank
 
 
-def run_singlemodel(trian_x,trian_y,test_x,test_y):
+def run_singlemodel(train_x, trian_y, test_x, test_y):
 
-    rank = feature_RFE(trian_x,trian_y)
-    for i in range(0,len(rank)):
-        index = [x for x in range(0,len(rank[i])) if rank[i][x]==1]
+    rank = feature_RFE(train_x, trian_y)
+    for i in range(0, len(rank)):
+        index = [x for x in range(0, len(rank[i])) if rank[i][x]==1]
         print [features_list[x] for x in index]
-        trian = trian_x[:,index]
-        test = test_x[:,index]
-        #step3 ：minning
+        train = train_x[:, index]
+        test = test_x[:, index]
+        # step3 ：minning
         ensemble = ['RandomForest']
-        run_model(ensemble,trian,trian_y,test,test_y)
+        run_model(ensemble, train, trian_y, test, test_y)
 
     return rank
 

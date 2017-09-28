@@ -52,16 +52,18 @@ def set_tagret(dataset, col_name, n):
     dataset = dataset.dropna(subset=['S0181392'])
     # dataset = dataset.drop_duplicates().dropna(how='any')
     # target_data["target"] = dataset[col_name].diff(-n)
-    # target_data.loc[target_data["target"] >= 0, "target"] = 1
-    # target_data.loc[target_data["target"] < 0, "target"] = 0
+    # dataset.loc[dataset["target"] >= 0, "target"] = 1
+    # dataset.loc[dataset["target"] < 0, "target"] = 0
 
-    dataset["target"] = np.where(dataset['S0181392'].diff(-n) >= 0, 0, 1)
+    target_data = np.where(dataset['S0181392'].diff(-n) >= 0, 0, 1)
+    dataset["target"] = target_data
+    dataset.to_csv('D:/cu-final.csv')
     return dataset
 
 def get_pre_data(data):
 
     # step1 filling empty , missing data
-    col_fill = {'USE00020': 'median', 'S0049507': 'bfill', 'PE100058': 'pad', 'MA000001': 'pad'}
+    col_fill = {'USE00020': 'median', 'S0049507': 'pad', 'PE100058': 'pad', 'MA000001': 'pad'}
     data = fill_data(data, col_fill)
 
     # step2 set target
