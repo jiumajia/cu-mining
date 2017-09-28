@@ -6,6 +6,7 @@
 @author: zhoucuilian
 """
 from mining import model_Bagging, model_DecisionTree, model_LR, model_NaiveBayes, model_RF, model_SVM, model_XGB
+from mining.Xgboost import run_xgboost
 from sklearn import preprocessing
 import numpy as np
 from data_handle.table_info import features_list
@@ -53,7 +54,7 @@ def run_model(ensemble, data):
         if m == 'DecisionTree':
             model_DecisionTree.DecisionTree(train_x, train_y, test_x, test_y)
         if m == 'xgboost':
-            model_XGB.xgb(train_x, train_y, test_x, test_y)
+            run_xgboost(train_x, train_y, test_x, test_y)
         if m == 'Linear':
             model_LR.Linear(train_x, train_y, test_x, test_y)
         if m == 'NaiveBayes':
