@@ -24,6 +24,7 @@ Icon
 .idea/**/tasks.xml
 .idea/dictionarie
 .idea/*.xml
+.idea/*.iml
 workspace.xml
 
 
