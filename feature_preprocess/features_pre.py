@@ -70,6 +70,6 @@ def get_pre_data(data):
     data = set_tagret(data, 'S0181392', 1)
 
     # step3 set features
-    train_data, target_data = features_gear.set_features(data)
+    train_data, target_data = features_gear.set_features(data, stage="f_stage_two")
 
     return train_data, target_data
