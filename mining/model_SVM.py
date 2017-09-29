@@ -4,7 +4,7 @@ import time
 from sklearn import svm
 from sklearn.metrics import accuracy_score
 
-def SVM(tran_x, train_y, test_x, test_y):
+def SVM(train_x, train_y, test_x, test_y):
     gamma_2d_range = [x * 0.01 for x in range(2, 30)]
     C_2d_range = [x for x in range(2, 30)]
     kernel_function = ['rbf', 'poly', 'sigmoid']
@@ -18,7 +18,7 @@ def SVM(tran_x, train_y, test_x, test_y):
             for svm_g in gamma_2d_range:
                 iter_num += 1
                 cfr = svm.SVC(kernel=svm_k, C=svm_c, gamma=svm_g)
-                cfr.fit(tran_x, train_y)
+                cfr.fit(train_x, train_y)
                 p_out = cfr.predict(test_x)
                 accuracy_t = accuracy_score(test_y, p_out)
                 if (accuracy < accuracy_t):

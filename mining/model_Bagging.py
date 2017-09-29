@@ -5,7 +5,7 @@ from sklearn.ensemble import BaggingClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 
-def Bagging(tran_x, train_y, test_x, test_y):
+def Bagging(train_x, train_y, test_x, test_y):
     n_estimators_range = [x for x in range(10, 100)]
     accuracy = 0
     iter_num = 0
@@ -14,7 +14,7 @@ def Bagging(tran_x, train_y, test_x, test_y):
         iter_num += 1
         cfr = BaggingClassifier(LogisticRegression(), n_estimators=n,
                                 max_samples=0.5, max_features=0.5)
-        cfr.fit(tran_x, train_y)
+        cfr.fit(train_x, train_y)
         p_out = cfr.predict(test_x)
         accuracy_t = accuracy_score(p_out, test_y)
         if (accuracy < accuracy_t):

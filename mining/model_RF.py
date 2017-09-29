@@ -4,7 +4,7 @@ import time
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 
-def RandomForest(tran_x, train_y, test_x, test_y):
+def RandomForest(train_x, train_y, test_x, test_y):
     accuracy = 0
     n_estimators_range = [x for x in range(10, 100)]
     criterion = ['gini', 'entropy']
@@ -16,7 +16,7 @@ def RandomForest(tran_x, train_y, test_x, test_y):
         for n in n_estimators_range:
             iter_num += 1
             cfr = RandomForestClassifier(n_estimators=n, criterion=c)
-            cfr.fit(tran_x, train_y)
+            cfr.fit(train_x, train_y)
             p_out = cfr.predict(test_x)
             accuracy_t = accuracy_score(test_y, p_out)
             if (accuracy < accuracy_t):

@@ -2,10 +2,9 @@
 # -*- coding: utf-8 -*-
 
 import pandas as pd
-
+import os
 import config
-
-from table_info import table_col_map
+from data_handle.table_info import table_col_map
 from sqlalchemy import create_engine
 
 
@@ -16,32 +15,41 @@ ALPHA_CONNECTION = create_engine('mysql+pymysql://exingcai:uscj!@#@172.16.88.140
 
 
 class CuData(object):
-    _file_path = "/Users/zhoucuilian/PycharmProjects/cu_mining/datafiles/cu.csv"
 
-    def __init__(self):
-        self.table_col_map = table_col_map
-        self.dataset = pd.DataFrame(columns=["date"])
+    """
+     CuData return 2011 -2017 cu data
+    """
 
     def __init__(self, **kwargs):
         self.table_col_map = table_col_map
         self.dataset = pd.DataFrame(columns=["date"])
+        self._file_path = os.getcwd() + "/datafiles/cu.csv"
         self.get_data(**kwargs)
 
     def get_data(self, start_date='2011-01-01', end_date='2017-07-30', source="DB"):
+        self.start_date = start_date
+        self.end_date = end_date
         if source == "DB":
-            read_data = self._get_data_from_mysql(start_date, end_date)
+            self.dataset = self._get_data_from_mysql(start_date, end_date)
         elif source == "FILE":
-            read_data = pd.read_csv(self._file_path)
+            self.dataset = pd.read_csv(self._file_path)  # waiting for function "_get_data_from_file"
         else:
             raise ValueError("You must provide source : DB or FILE")
 
-        return read_data
+        return self.dataset
 
-    def _data_to_csv(self, path=_file_path):
+    def _data_to_csv(self, path=None):
+        if not path:
+            path = self._file_path
         try:
             self.dataset.to_csv(path)
         except Exception, e:
             raise e
+
+    def _get_data_from_file(self, path=None):
+        if not path:
+            path = self._file_path
+        pass
 
     def _get_data_from_mysql(self, start_date='2011-01-01', end_date='2017-07-30'):
         # 从mysql数据库 读取数据
@@ -64,10 +72,11 @@ class CuData(object):
         """  property of CuData """
         return self.dataset
 
-
 if __name__ == "__main__":
     cu = CuData(start_date='2012-01-01', end_date='2017-07-30')
-    print cu.data
+    print cu.start_date
+    print cu.end_date
+    # print cu.data
 
 
 
