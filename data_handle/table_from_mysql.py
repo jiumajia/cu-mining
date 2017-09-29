@@ -23,7 +23,8 @@ class CuData(object):
     def __init__(self, **kwargs):
         self.table_col_map = table_col_map
         self.dataset = pd.DataFrame(columns=["date"])
-        self._file_path = os.getcwd() + "/datafiles/cu.csv"
+        datafile_path = os.path.dirname(os.path.abspath(os.path.abspath(os.path.dirname(__file__))))
+        self._file_path = datafile_path + "/datafiles/cu.csv"
         self.get_data(**kwargs)
 
     def get_data(self, start_date='2011-01-01', end_date='2017-07-30', source="DB"):
