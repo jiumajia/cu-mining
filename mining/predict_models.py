@@ -5,21 +5,24 @@
 预测模型构建
 @author: zhoucuilian
 """
+from mining.Xgboost import run_xgboost
 from mining import model_Bagging, model_DecisionTree, model_LR, model_NaiveBayes, model_RF, \
     model_SVM, model_XGB, model_GBT
 from sklearn.model_selection import train_test_split
 from feature_preprocess.features_pre import get_pre_data
+import pandas as pd
+
 
 def run_model(ensemble, data):
     # ensemble = ['SVM','RandomForest','Linear','DecisionTree','NaiveBayes','Bagging']
 
     train_data, target_data = get_pre_data(data)
+    # pd.DataFrame(train_data).to_csv('train.csv')
 
     train_x, test_x, train_y, test_y = train_test_split(train_data, target_data, test_size=0.2, random_state=42)
 
     print '训练集样本数:',len(train_x), '  测试集样本数:',len(test_x)
 
-    # for m in ensemble:
     m = ensemble
     if m == 'SVM':
         model_SVM.SVM(train_x, train_y, test_x, test_y)

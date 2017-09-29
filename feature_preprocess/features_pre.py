@@ -6,10 +6,8 @@
 @author: zhoucuilian
 """
 
-import datetime
 import pandas as pd
-import features_gear
-
+from feature_preprocess import features_gear
 import numpy as np
 from sklearn import preprocessing
 
@@ -57,13 +55,13 @@ def set_tagret(dataset, col_name, n):
 
     target_data = np.where(dataset['S0181392'].diff(-n) >= 0, 0, 1)
     dataset["target"] = target_data
-    dataset.to_csv('D:/cu-final.csv')
+    dataset.to_csv('.csv')
     return dataset
 
 def get_pre_data(data):
 
     # step1 filling empty , missing data
-    col_fill = {'USE00020': 'median', 'S0049507': 'pad', 'PE100058': 'pad', 'MA000001': 'pad'}
+    col_fill = {'USE00020': 'median', 'S0049507': 'pad', 'PE100058': 'pad', 'MA000001': 'pad','PE100042':'bfill'}
     data = fill_data(data, col_fill)
 
     # step2 set target

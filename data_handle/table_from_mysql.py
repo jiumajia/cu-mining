@@ -4,7 +4,7 @@
 import pandas as pd
 import os
 import config
-from table_info import table_col_map
+from data_handle.table_info import table_col_map
 from sqlalchemy import create_engine
 
 
@@ -15,6 +15,7 @@ ALPHA_CONNECTION = create_engine('mysql+pymysql://exingcai:uscj!@#@172.16.88.140
 
 
 class CuData(object):
+
     """
      CuData return 2011 -2017 cu data
     """
