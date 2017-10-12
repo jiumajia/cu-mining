@@ -55,19 +55,19 @@ def set_tagret(dataset, col_name, n):
 
     target_data = np.where(dataset['S0181392'].diff(-n) >= 0, 0, 1)
     dataset["target"] = target_data
-    dataset.to_csv('.csv')
+    # dataset.to_csv('.csv')
     return dataset
 
-def get_pre_data(data):
+def get_pre_data(data, start_date, end_date):
 
     # step1 filling empty , missing data
-    col_fill = {'USE00020': 'median', 'S0049507': 'pad', 'PE100058': 'pad', 'MA000001': 'pad','PE100042':'bfill'}
+    col_fill = {'USE00020': 'median', 'S0049507': 'pad', 'PE100058': 'pad', 'MA000001': 'pad', 'PE100042': 'bfill'}
     data = fill_data(data, col_fill)
 
     # step2 set target
     data = set_tagret(data, 'S0181392', 1)
 
     # step3 set features
-    train_data, target_data = features_gear.set_features(data, stage="f_stage_two")
+    train_data, target_data = features_gear.set_features(data, start_date, end_date, stage="f_stage_two")
 
     return train_data, target_data

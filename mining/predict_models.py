@@ -13,15 +13,15 @@ from feature_preprocess.features_pre import get_pre_data
 import pandas as pd
 
 
-def run_model(ensemble, data):
+def run_model(ensemble, data, start_date, end_date):
     # ensemble = ['SVM','RandomForest','Linear','DecisionTree','NaiveBayes','Bagging']
 
-    train_data, target_data = get_pre_data(data)
+    train_data, target_data = get_pre_data(data, start_date, end_date)
     # pd.DataFrame(train_data).to_csv('train.csv')
 
     train_x, test_x, train_y, test_y = train_test_split(train_data, target_data, test_size=0.2, random_state=42)
 
-    print '训练集样本数:',len(train_x), '  测试集样本数:',len(test_x)
+    print '训练集样本数:', len(train_x), '  测试集样本数:',len(test_x)
 
     m = ensemble
     if m == 'SVM':
