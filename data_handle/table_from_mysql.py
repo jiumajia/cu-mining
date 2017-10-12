@@ -31,14 +31,24 @@ class CuData(object):
 
         self.get_data(**kwargs)
 
-    def get_data(self, source="DB"):
+    def get_data(self, **kwargs):
 
-        start_date = '2011-01-01'
+        if "source" in kwargs:
+            source = kwargs["source"]
 
-        end_date = datetime.datetime.now().strftime('%Y-%m-%d')
+        if "start_date" in kwargs:
+            start_date = kwargs["start_date"]
+        else:
+            start_date = '2011-01-01'
+
+        if "end_date" in kwargs:
+            end_date = kwargs["end_date"]
+        else:
+            end_date = datetime.datetime.now().strftime('%Y-%m-%d')
 
         if source == "DB":
             self.dataset = self._get_data_from_mysql(start_date, end_date)
+            self._data_to_csv()
         elif source == "FILE":
             self.dataset = pd.read_csv(self._file_path)  # waiting for function "_get_data_from_file"
         else:
@@ -72,8 +82,6 @@ class CuData(object):
                 self.dataset = pd.merge(self.dataset, data_slice, how='outer')
 
         self.dataset = self.dataset.sort_values(by="date")
-
-        self._data_to_csv()
 
         return self.dataset
 

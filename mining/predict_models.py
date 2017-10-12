@@ -11,13 +11,11 @@ from mining import model_Bagging, model_DecisionTree, model_LR, model_NaiveBayes
 from sklearn.model_selection import train_test_split
 from feature_preprocess.features_pre import get_pre_data
 import pandas as pd
-
+import sys
 
 def run_model(ensemble, data, start_date, end_date):
-    # ensemble = ['SVM','RandomForest','Linear','DecisionTree','NaiveBayes','Bagging']
-
-    train_data, target_data = get_pre_data(data, start_date, end_date)
-    # pd.DataFrame(train_data).to_csv('train.csv')
+    # pending better to be merged with train and target !!!
+    train_data, target_data, predict_data = get_pre_data(data, start_date, end_date)
 
     train_x, test_x, train_y, test_y = train_test_split(train_data, target_data, test_size=0.2, random_state=42)
 
@@ -25,18 +23,22 @@ def run_model(ensemble, data, start_date, end_date):
 
     m = ensemble
     if m == 'SVM':
-        model_SVM.SVM(train_x, train_y, test_x, test_y)
+       ml = model_SVM.SVM(train_x, train_y, test_x, test_y)
     if m == 'RandomForest':
-        model_RF.RandomForest(train_x, train_y, test_x, test_y)
+       ml = model_RF.RandomForest(train_x, train_y, test_x, test_y)
     if m == 'DecisionTree':
-        model_DecisionTree.DecisionTree(train_x, train_y, test_x, test_y)
+       ml = model_DecisionTree.DecisionTree(train_x, train_y, test_x, test_y)
     if m == 'xgboost':
-        model_XGB.xgb(train_x, train_y, test_x, test_y)
+       ml = model_XGB.xgb(train_x, train_y, test_x, test_y)
     if m == 'Linear':
-        model_LR.Linear(train_x, train_y, test_x, test_y)
+       ml = model_LR.Linear(train_x, train_y, test_x, test_y)
     if m == 'NaiveBayes':
-        model_NaiveBayes.NaiveBayes(train_x, train_y, test_x, test_y)
+       ml = model_NaiveBayes.NaiveBayes(train_x, train_y, test_x, test_y)
     if m == 'Bagging':
-        model_Bagging.Bagging(train_x, train_y, test_x, test_y)
+       ml = model_Bagging.Bagging(train_x, train_y, test_x, test_y)
     if m == 'GBT':
-        model_GBT.GBT(train_x, train_y, test_x, test_y)
+       ml = model_GBT.GBT(train_x, train_y, test_x, test_y)
+
+    print ml.predict(predict_data)
+
+    return ml

@@ -26,4 +26,4 @@ def Linear(train_x, train_y, test_x, test_y):
     # 打印最优参数列表
     print '精确率', accuracy, '参数列表', params
     print len(out)
-    return out
+    return cfr
