@@ -21,19 +21,19 @@ if __name__ == "__main__":
     model_start_date = ""
     model_end_date = ""
 
-    res = run_model('Linear', cu.data, model_start_date, model_end_date)
+    classf = run_model('Linear', cu.data, model_start_date, model_end_date)
 
     # predict
     current = CuData(source="DB", start_date='2017-06-30', end_date='2017-06-30', file='cu-630.csv')
-    print current.data
     predict_data = fill_data(current.data)
     predict_data["target"] = '0'  # for process fake filling
 
     pd_data = features_gear.f_stage_one(predict_data)
     train_data = np.array(pd_data[F_STAG1[:-2]])
 
-    print res.predict(train_data)
+    res = classf.predict(train_data)
+    print res
     # model
-    # ai_db_insert(res)
+    # ai_api_update(res)
 
 
