@@ -26,7 +26,7 @@ Icon
 .idea/*.xml
 .idea/*.iml
 workspace.xml
-
+*.csv
 
 # Sensitive or high-churn files:
 .idea/**/dataSources/

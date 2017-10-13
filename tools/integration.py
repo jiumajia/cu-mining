@@ -1,0 +1,1 @@
+# -*- coding: utf-8 -*-import requestdef ai_api_update(date, v_id, res):    v_id = 36    url = "http://api.a3.useonline.cn/alert/ai_prediction"    post_data = {        "date": date,        "varieties_id": v_id,        "prediction": res,    }    request.post(url, post_data)    return
