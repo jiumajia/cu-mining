@@ -23,8 +23,8 @@ if __name__ == "__main__":
 
     res = run_model('Linear', cu.data, model_start_date, model_end_date)
 
-    current = CuData(source="DB", start_date='2017-06-30', end_date='2017-06-30')
-
+    # predict
+    current = CuData(source="DB", start_date='2017-06-30', end_date='2017-06-30', file='cu-630.csv')
     print current.data
     predict_data = fill_data(current.data)
     predict_data["target"] = '0'  # for process fake filling

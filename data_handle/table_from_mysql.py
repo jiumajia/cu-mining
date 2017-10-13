@@ -27,7 +27,10 @@ class CuData(object):
 
         datafile_path = os.path.dirname(os.path.abspath(os.path.abspath(os.path.dirname(__file__))))
 
-        self._file_path = datafile_path + "/datafiles/cu.csv"
+        if "file" in kwargs:
+            self._file_path = datafile_path + "/datafiles/" + kwargs["file"]
+        else:
+            self._file_path = datafile_path + "/datafiles/cu.csv"
 
         self.get_data(**kwargs)
 
@@ -54,15 +57,13 @@ class CuData(object):
         else:
             raise ValueError("You must provide source as DB or FILE")
 
+        print "Count of Loading Data : ", len(self.dataset)
+
         return self.dataset
 
-    def _data_to_csv(self, path=None):
-        if not path:
-            path = self._file_path
-        try:
-            self.dataset.to_csv(path)
-        except Exception, e:
-            raise e
+    def _data_to_csv(self):
+
+        self.dataset.to_csv(self._file_path)
 
     ##### ignore ############
     def _get_data_from_file(self, path=None):
