@@ -15,7 +15,7 @@ import sys
 
 def run_model(ensemble, data, start_date, end_date):
     # pending better to be merged with train and target !!!
-    train_data, target_data, predict_data = get_pre_data(data, start_date, end_date)
+    train_data, target_data = get_pre_data(data, start_date, end_date)
 
     train_x, test_x, train_y, test_y = train_test_split(train_data, target_data, test_size=0.2, random_state=42)
 
@@ -39,6 +39,5 @@ def run_model(ensemble, data, start_date, end_date):
     if m == 'GBT':
        ml = model_GBT.GBT(train_x, train_y, test_x, test_y)
 
-    print ml.predict(predict_data)
 
     return ml
