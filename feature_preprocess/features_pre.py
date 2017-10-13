@@ -64,9 +64,6 @@ def get_pre_data(data, start_date, end_date):
     # step2 set target
     data = set_tagret(data, 'S0181392', 1)
 
-    # step3 set features
-    train_data, target_data = features_gear.set_features(data, stage="f_stage_one")
-    pd.DataFrame(train_data).to_csv('train.csv')
     # step3 set features   # pending better to be merged with train and target !!!
     train_data, target_data = features_gear.set_features(data, start_date, end_date, stage="f_stage_one")
 
