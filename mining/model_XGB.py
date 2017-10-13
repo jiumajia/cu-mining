@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 #-*- coding: utf-8 -*-
 import xgboost as xgb
-from xgboost.sklearn import XGBClassifier
 
 def Xgboost(tran_x, train_y, test_x, test_y):
     xgtrain = xgb.DMatrix(tran_x, label=train_y)

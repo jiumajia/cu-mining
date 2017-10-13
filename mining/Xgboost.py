@@ -9,12 +9,36 @@ import pandas as pd
 import numpy as np
 import xgboost as xgb
 from xgboost.sklearn import XGBClassifier
-from sklearn import cross_validation, metrics
+from sklearn import  metrics
 from sklearn.grid_search import GridSearchCV
-
 import matplotlib.pylab as plt
 from matplotlib.pylab import rcParams
 rcParams['figure.figsize'] = 12, 4
+
+
+def Xgboost(train_x, train_y, test_x, test_y):
+    xgb1 = XGBClassifier(
+        learning_rate=0.1,
+        n_estimators=1000,
+        max_depth=5,
+        min_child_weight=1,
+        gamma=0,
+        subsample=0.8,
+        colsample_bytree=0.8,
+        objective='binary:logistic',
+        nthread=4,
+        scale_pos_weight=1,
+        random_state=27)
+
+
+
+    end = time.clock()
+    print 'svm --- ', ' iterations', iter_num, ' run time:', end - start
+
+    # 打印最优参数列表
+    print '精确率', accuracy, '参数列表', params
+    return accuracy
+
 
 
 def modelfit(alg,train_x, train_y, test_x, test_y, useTrainCV=True, cv_folds=5, early_stopping_rounds=50):
@@ -68,22 +92,22 @@ def run_xgboost(train_x, train_y, test_x, test_y):
         random_state=27)
 
 
-    # modelfit(xgb1, train_x, train_y, test_x, test_y)
+    modelfit(xgb1, train_x, train_y, test_x, test_y)
     #Grid seach on subsample and max_features
     #Choose all predictors except target & IDcols
-    param_test1 = {
-        'max_depth':range(3,10,2),
-        'min_child_weight':range(1,6,2)
-    }
-    gsearch1 = GridSearchCV(estimator = XGBClassifier( learning_rate =0.1, n_estimators=140, max_depth=5,
-                                            min_child_weight=1, gamma=0, subsample=0.8, colsample_bytree=0.8,
-                                            objective= 'binary:logistic', n_jobs=4, scale_pos_weight=1, random_state=27),
-                           param_grid = param_test1, scoring='roc_auc',n_jobs=4,iid=False, cv=5)
-    gsearch1.fit(train_x,train_y)
+    # param_test1 = {
+    #     'max_depth':range(3,10,2),
+    #     'min_child_weight':range(1,6,2)
+    # }
+    # gsearch1 = GridSearchCV(estimator = XGBClassifier( learning_rate =0.1, n_estimators=140, max_depth=5,
+    #                                         min_child_weight=1, gamma=0, subsample=0.8, colsample_bytree=0.8,
+    #                                         objective= 'binary:logistic', n_jobs=4, scale_pos_weight=1, random_state=27),
+    #                        param_grid = param_test1, scoring='roc_auc',n_jobs=4,iid=False, cv=5)
+    # gsearch1.fit(train_x,train_y)
     # gsearch1.predict(train_x)
     # dtest_predictions = alg.predict(test_x)
     # dtest_predprob = alg.predict_proba(test_x)[:,1]
     # print "Accuracy(Test) : %.4g" % metrics.accuracy_score(test_y, dtest_predictions)
     # print 'AUC Score (Test): %f' % metrics.roc_auc_score(test_y,dtest_predprob)
-    gsearch1.grid_scores_, gsearch1.best_params_, gsearch1.best_score_
+#    gsearch1.grid_scores_, gsearch1.best_params_, gsearch1.best_score_
 

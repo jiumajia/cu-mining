@@ -11,8 +11,6 @@ from sqlalchemy import create_engine
 # 初始化数据库连接:
 ALPHA_CONNECTION = create_engine('mysql+pymysql://exingcai:uscj!@#@172.16.88.140:20306/alpha')
 
-#alpha_con = create_engine('mysql+pymysql://exingcai:uscj!@#@172.16.88.163:20306/alpha')
-
 
 class CuData(object):
 
@@ -27,11 +25,12 @@ class CuData(object):
         self._file_path = datafile_path + "/datafiles/cu.csv"
         self.get_data(**kwargs)
 
-    def get_data(self, start_date='2011-01-01', end_date='2017-07-30', source="DB"):
+    def get_data(self, start_date='2011-01-01', end_date='2017-10-11', source="DB"):
         self.start_date = start_date
         self.end_date = end_date
         if source == "DB":
             self.dataset = self._get_data_from_mysql(start_date, end_date)
+            self.dataset.to_csv(self._file_path)
         elif source == "FILE":
             self.dataset = pd.read_csv(self._file_path)  # waiting for function "_get_data_from_file"
         else:
@@ -64,8 +63,6 @@ class CuData(object):
 
         self.dataset = self.dataset.sort_values(by="date")
 
-        self._data_to_csv()
-
         return self.dataset
 
     @property
@@ -77,7 +74,7 @@ if __name__ == "__main__":
     cu = CuData(start_date='2012-01-01', end_date='2017-07-30')
     print cu.start_date
     print cu.end_date
-    # print cu.data
+    print cu.data
 
 
 

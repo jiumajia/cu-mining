@@ -6,11 +6,10 @@
 @author: zhoucuilian
 """
 from mining.Xgboost import run_xgboost
-from mining import model_Bagging, model_DecisionTree, model_LR, model_NaiveBayes, model_RF, \
-    model_SVM, model_XGB, model_GBT
+from mining import model_Bagging, model_DecisionTree, model_LR, model_NaiveBayes, model_RF,\
+     model_SVM, model_XGB, model_GBT
 from sklearn.model_selection import train_test_split
 from feature_preprocess.features_pre import get_pre_data
-import pandas as pd
 
 
 def run_model(ensemble, data):
@@ -20,6 +19,7 @@ def run_model(ensemble, data):
     # pd.DataFrame(train_data).to_csv('train.csv')
 
     train_x, test_x, train_y, test_y = train_test_split(train_data, target_data, test_size=0.2, random_state=42)
+    print train_x.shape,test_x.shape,train_y.shape,test_y.shape
 
     print '训练集样本数:',len(train_x), '  测试集样本数:',len(test_x)
 
@@ -30,8 +30,8 @@ def run_model(ensemble, data):
         model_RF.RandomForest(train_x, train_y, test_x, test_y)
     if m == 'DecisionTree':
         model_DecisionTree.DecisionTree(train_x, train_y, test_x, test_y)
-    if m == 'xgboost':
-        model_XGB.xgb(train_x, train_y, test_x, test_y)
+    if m == 'Xgboost':
+        model_XGB.Xgboost(train_x, train_y, test_x, test_y)
     if m == 'Linear':
         model_LR.Linear(train_x, train_y, test_x, test_y)
     if m == 'NaiveBayes':
@@ -40,3 +40,6 @@ def run_model(ensemble, data):
         model_Bagging.Bagging(train_x, train_y, test_x, test_y)
     if m == 'GBT':
         model_GBT.GBT(train_x, train_y, test_x, test_y)
+    if m == '':
+        pass
+

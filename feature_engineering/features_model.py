@@ -10,7 +10,9 @@ from sklearn.feature_selection import RFE
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from feature_preprocess.features_gear import features_list
-from mining.predict_models import run_model
+from mining import model_LR,model_RF
+from mining.Xgboost import run_xgboost
+
 
 def feature_RFE(trian_x, trian_y):
     """
@@ -39,8 +41,9 @@ def run_singlemodel(train_x, train_y, test_x, test_y):
         train = train_x[:, index]
         test = test_x[:, index]
         # step3 ：minning
-        ensemble = ['RandomForest']
-        run_model(ensemble, train, train_y, test, test_y)
+        model_LR.Linear(train, train_y, test, test_y)
+        # model_RF.RandomForest(train, train_y, test, test_y)
+        #run_xgboost(train, train_y, test, test_y)
     return rank
 
 
