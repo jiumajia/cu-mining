@@ -24,10 +24,10 @@ if __name__ == "__main__":
     classf = run_model('Linear', cu.data, model_start_date, model_end_date)
 
     # predict
-    current = CuData(source="DB", start_date='2017-06-30', end_date='2017-06-30', file='cu-630.csv')
+    current = CuData(source="DB", start_date='2017-10-13', end_date='2017-10-13', file='cu-630.csv')
     predict_data = fill_data(current.data)
     predict_data["target"] = '0'  # for process fake filling
-
+    print predict_data
     pd_data = features_gear.f_stage_one(predict_data)
     train_data = np.array(pd_data[F_STAG1[:-2]])
 
